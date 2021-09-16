@@ -1,0 +1,46 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'java'
+	id 'org.sonarqube' version '3.3'
+	id 'jacoco'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'io.codefresh'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnit()
+
+    maxHeapSize = '1G'
+}
+
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'https://sonar.qtestdev.com'
+		property "sonar.projectKey", "java-gradle-example"
+		property "sonar.projectName", "java-gradle-example"
+		property "sonar.projectVersion", "1.0"
+		// property "sonar.sources", "."
+		// property "sonar.java.binaries", "target/classes"
+		// property "sonar.inclusions", "**/*.java"
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
